@@ -15,9 +15,7 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-// Route::get('list', function () {
-//     return view('list');
-// });
+
 
 // Route::get('list', [TaskController::class, 'index']);
 
@@ -25,11 +23,13 @@ use App\Http\Controllers\TaskController;
 //     return view('login');
 // });
 
+Route::get('/', [UserController::class, 'loginCheck']);
+
 Route::get('login', [UserController::class, 'loginCheck']);
 
 Route::post('login', [UserController::class, 'login']);
 
-Route::get('logout', [UserController::class, 'logout']);
+// Route::get('logout', [UserController::class, 'logout']);
 
 Route::get('register', function() {
     return view('register');
@@ -46,4 +46,6 @@ Route::group(['middleware' => 'usersession'], function() {
     Route::get('sDelete/{id}', [TaskController::class, 'sDelete']);
     Route::get('deletePerm/{id}', [TaskController::class, 'deletePermanently']);
     Route::get('edittask/{id}', [TaskController::class, 'editTask']);
+    Route::get('logout', [UserController::class, 'logout']);
+    Route::post('edittask/update/{id}', [TaskController::class, 'updateTask']);
 });

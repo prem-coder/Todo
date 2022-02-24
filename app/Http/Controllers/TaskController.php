@@ -7,11 +7,9 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    //
     function index(Request $req) {
         $id = $req->session()->get('user');
         $task = Task::where('user_id', $id)->get();
-        // return $task;
         return view('list', ['tasks' => $task]);
     }
 
@@ -22,11 +20,10 @@ class TaskController extends Controller
             'user_id' => $id,
             'task' => $req->task,
             'due_time' => $req->time,
+            'priority' => $req->priority,
         ]);
-
-        // $result = Task::where('user_id', $id)->get();
-        // return view('list', ['tasks' => $result]);
         return back();
+        // return $req;
     }
 
     function completed(Request $req) {
@@ -50,7 +47,18 @@ class TaskController extends Controller
         return back();
     }
 
-    function editTask() {
-        return view('edit');
+    function editTask(Request $req, $id) {
+        $result = Task::where('id', $id)->get();
+        return view('edit', ['tasks' => $result]);
+    }
+
+    function updateTask(Request $req, $id) {
+        Task::where('id', $id)
+            ->update([
+                'task' => $req->task,
+                'due_time' => $req->time,
+                'priority' => $req->priority,
+            ]);
+        return redirect('list');
     }
 }

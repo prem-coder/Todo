@@ -17,5 +17,6 @@ class Task extends Model
         'due_time',
         'created_at',
         'updated_at',
+        'priority',
     ];
 }
